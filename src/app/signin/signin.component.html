@@ -4,3 +4,11 @@
 
 <button (click)="socialSignIn('facebook')">Sign in with facebook</button>
 <button (click)="socialSignIn('google')">Sign in with Google</button>
+
+<p>RxCompoent.message: {{message}}</p>
+<button
+  [disabled]="service.started$ | async"
+  (click)="listen()"
+>listen</button>
+<p>lang: ja</p>
+<p>grammars: none</p>

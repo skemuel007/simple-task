@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService, FacebookLoginProvider, GoogleLoginProvider, LinkedinLoginProvider} from 'angular-6-social-login';
+import {resultList, RxSpeechRecognitionService} from '@kamiazya/ngx-speech-recognition';
 
 @Component({
   selector: 'app-signin',
@@ -8,9 +9,21 @@ import {AuthService, FacebookLoginProvider, GoogleLoginProvider, LinkedinLoginPr
 })
 export class SigninComponent implements OnInit {
 
-  constructor(private socialAuthService: AuthService ) { }
+  message = '';
+  constructor(private socialAuthService: AuthService,
+              public service: RxSpeechRecognitionService) { }
 
   ngOnInit() {
+  }
+
+  listen() {
+    this.service
+      .listen()
+      .pipe(resultList)
+      .subscribe((list: SpeechRecognitionResultList) => {
+        this.message = list.item(0).item(0).transcript;
+        console.log('RxComponent:onresult', this.message, list);
+      });
   }
 
   socialSignIn(socialPlatform: string) {

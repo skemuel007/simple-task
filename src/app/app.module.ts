@@ -15,6 +15,13 @@ import { SigninComponent } from './signin/signin.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {WebSpeechModule} from './web-speech/web-speech.module';
 import {SharedModule} from './shared/shared.module';
+import {
+  RxSpeechRecognitionService,
+  SpeechRecognitionLang,
+  SpeechRecognitionMaxAlternatives,
+  SpeechRecognitionModule,
+  SpeechRecognitionService
+} from '@kamiazya/ngx-speech-recognition';
 
 // configs
 export function getAuthServiceConfigs() {
@@ -51,12 +58,27 @@ export function getAuthServiceConfigs() {
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
+    SpeechRecognitionModule.withConfig({
+      lang: 'en-US',
+      interimResults: true,
+      maxAlternatives: 10,
+    }),
   ],
   providers: [
     {
       provide: AuthServiceConfig,
       useFactory: getAuthServiceConfigs
-    }
+    },
+    {
+      provide: SpeechRecognitionLang,
+      useValue: 'en-US',
+    },
+    {
+      provide: SpeechRecognitionMaxAlternatives,
+      useValue: 1,
+    },
+    SpeechRecognitionService,
+    RxSpeechRecognitionService,
   ],
   bootstrap: [AppComponent]
 })
