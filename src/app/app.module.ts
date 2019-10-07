@@ -43,11 +43,19 @@ export function getAuthServiceConfigs() {
   );
   return config;
 }
+import { AuthenticationComponent } from './authentication/authentication.component';
+import { LoginComponent } from './authentication/login/login.component';
+import { RegistrationComponent } from './authentication/registration/registration.component';
+import { ApplicationComponent } from './application/application.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SigninComponent
+    SigninComponent,
+    AuthenticationComponent,
+    LoginComponent,
+    RegistrationComponent,
+    ApplicationComponent
   ],
   imports: [
     BrowserModule,

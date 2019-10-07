@@ -1,0 +1,66 @@
+<!--<div class="container">
+  <div class="row">
+    <div class="card card-body">
+      <form #form [formGroup]="loginForm">
+
+        <div class="row">
+          <div class="col-sm">
+            <mat-form-field appearance="fill" style="width: 100%">
+              <mat-label><i class="fa fa-envelope-o"></i>&nbsp;Email</mat-label>
+              <input formControlName="email" matInput name="email"/>
+              &lt;!&ndash;&lt;!&ndash; Validation for the email field based on the errors triggered&ndash;&gt;&ndash;&gt;
+              <mat-error
+                *ngIf="loginForm.controls['email'].touched && loginForm.controls['email'].invalid"
+                class="alert alert-danger">
+                &lt;!&ndash;if the email field is empty&ndash;&gt;
+                <span *ngIf="loginForm.controls['email'].hasError('required')">Email is Required</span>
+                &lt;!&ndash;&lt;!&ndash; if an invalid value is entered into the email field &ndash;&gt;&ndash;&gt;
+                <span *ngIf="loginForm.controls['email'].hasError('email')">Invalid Email</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm">
+            <mat-form-field appearance="fill" style="width: 100%">
+              <mat-label><i class="fa fa-key"></i>&nbsp;Password</mat-label>
+              <input formControlName="password" matInput name="password" type="password"/>
+              <mat-error *ngIf="loginForm.get('password').invalid && loginForm.get('password').touched"
+                         class="alert alert-danger">
+                <span *ngIf="loginForm.controls['password'].hasError('required')">Password is Required</span>
+                <span
+                  *ngIf="loginForm.controls['password'].hasError('minlength')">Password must be upto 6 characters</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="row">
+      <div class="col-sm">
+        <button [disabled]="loginForm.invalid" class="btn text-white" name="submit" type="submit"
+                (click)="loginSubmit(loginModal)">
+              <span matPrefix *ngIf="loginLoader">
+                <div class="spinner-grow text-primary" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+              </span>
+          Login &nbsp;<i
+          class="fa fa-paper-plane"></i></button>
+      </div>
+      <div class="col-sm">
+        <button type="button" class="float-right pr-5" mat-button color="primary"
+                (click)=" showModal(registerModal, loginModal)">Sign up
+        </button>
+      </div>
+      <div class="col-sm">
+        <button class="float-right " type="button" mat-button color="primary"
+                (click)="showModal(forgotModal, loginModal)  ">Forgot Password?
+        </button>
+      </div>
+    </div>
+  </div>
+</div>-->

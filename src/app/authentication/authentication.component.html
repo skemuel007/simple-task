@@ -1,0 +1,263 @@
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="navi">
+  <div class="container-fluid">
+        <span class="logoDisplay">
+            <img src="../../../../assets/img/wrk.jpeg" style="width: 50px; height: 50px"/>
+            <h4 class="name">Jobbit</h4>
+        </span>
+    <button class="navbar-toggler "  data-toggle="collapse" (click)="toggleNavbar()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse show" id="navbarNav" [ngClass]="{'show':navbarOpen}">
+      <ul class="nav navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/auth/home" routerLinkActive="active" (click)="closeNavBar()"><i class="fa fa-home">&nbsp;Home</i></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"><i class="fa fa-sign-in myCursor" (click)="loginModal.show()">&nbsp;Sign in</i></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="registerModal.show()" ><i class="fa fa-user myCursor">&nbsp;Sign up</i></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</nav>
+
+<!--Login modal-->
+
+<div mdbModal #loginModal="mdbModal" class="modal animated slideInLeft faster" tabindex="-1" role="dialog"
+     aria-labelledby="myBasicModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <h4 class="modal-title w-100 font-weight-bold" id="myModalLabel" style="color: #184e8e">Sign in</h4>
+        </div>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="loginModal.hide()">
+          <span aria-hidden="true" style="color: red;">×</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="card card-body">
+          <form #form [formGroup]="loginForm">
+
+            <div class="row">
+              <div class="col-sm">
+                <mat-form-field appearance="fill" style="width: 100%">
+                  <mat-label><i class="fa fa-envelope-o"></i>&nbsp;Email</mat-label>
+                  <input formControlName="email" matInput name="email"/>
+                  <!--&lt;!&ndash; Validation for the email field based on the errors triggered&ndash;&gt;-->
+                  <mat-error
+                    *ngIf="loginForm.controls['email'].touched && loginForm.controls['email'].invalid"
+                    class="alert alert-danger">
+                    <!--if the email field is empty-->
+                    <span *ngIf="loginForm.controls['email'].hasError('required')">Email is Required</span>
+                    <!--&lt;!&ndash; if an invalid value is entered into the email field &ndash;&gt;-->
+                    <span *ngIf="loginForm.controls['email'].hasError('email')">Invalid Email</span>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm">
+                <mat-form-field appearance="fill" style="width: 100%">
+                  <mat-label><i class="fa fa-key"></i>&nbsp;Password</mat-label>
+                  <input formControlName="password" matInput name="password" type="password"/>
+                  <mat-error *ngIf="loginForm.get('password').invalid && loginForm.get('password').touched"
+                             class="alert alert-danger">
+                    <span *ngIf="loginForm.controls['password'].hasError('required')">Password is Required</span>
+                    <span
+                      *ngIf="loginForm.controls['password'].hasError('minlength')">Password must be upto 6 characters</span>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-sm">
+            <button [disabled]="loginForm.invalid" class="btn text-white" name="submit" type="submit"
+                    (click)="loginSubmit(loginModal)">
+              <span matPrefix *ngIf="loginLoader">
+                <div class="spinner-grow text-primary" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+              </span>
+              Login &nbsp;<i
+              class="fa fa-paper-plane"></i></button>
+          </div>
+          <div class="col-sm">
+            <button type="button" class="float-right pr-5" mat-button color="primary"
+                    (click)=" showModal(registerModal, loginModal)">Sign up
+            </button>
+          </div>
+          <div class="col-sm">
+            <button class="float-right " type="button" mat-button color="primary"
+                    (click)="showModal(forgotModal, loginModal)  ">Forgot Password?
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--End of the Login Modal-->
+
+<!--Registration Modal-->
+
+<div mdbModal #registerModal="mdbModal" class="modal animated slideInLeft faster" tabindex="-1" role="dialog"
+     aria-labelledby="myBasicModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <h4 class="modal-title w-100 font-weight-bold" id="myModalLabel" style="color: #184e8e">Sign up</h4>
+        </div>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="registerModal.hide()">
+          <span aria-hidden="true" style="color: red;">×</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="card card-body">
+          <form [formGroup]="registerForm">
+            <div class="form-group">
+              <mat-form-field appearance="fill" style="width: 100%">
+                <mat-label><i class="fa fa-user-o">&nbsp;Username</i></mat-label>
+                <input matInput formControlName="username" name="username"/>
+                <mat-error *ngIf="registerForm.get('username').invalid && registerForm.get('username').touched"
+                           class="alert alert-danger">
+                  <span *ngIf="registerForm.controls['username'].hasError('required')"> Username is Required</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field appearance="fill" style="width: 100%">
+                <mat-label><i class="fa fa-envelope-o"></i>&nbsp;Email</mat-label>
+                <input matInput name="email" formControlName="email" />
+                <!--Email Validation-->
+                <mat-error *ngIf="registerForm.get('email').invalid && registerForm.get('email').touched"
+                           class="alert alert-danger">
+                  <span *ngIf="registerForm.controls['email'].hasError('required')">Email is Required</span>
+                  <span *ngIf="registerForm.controls['email'].hasError('email')">Invalid Email</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="form-group">
+              <mat-form-field appearance="fill" style="width: 100%">
+                <mat-label><i class="fa fa-key"></i>&nbsp;Password</mat-label>
+                <input matInput type="password" name="password" formControlName="password" [type]="hide? 'password' : 'text'"/>
+                <mat-hint>Minimum of 6 characters</mat-hint>
+                <mat-error *ngIf="registerForm.get('password').invalid && registerForm.get('password').touched"
+                           class="alert alert-danger">
+                <span *ngIf="registerForm.controls['password'].hasError('required')">
+                  Password is Required
+                </span>
+                  <span *ngIf="registerForm.controls['password'].hasError('minlength')">
+                  Minimum of 6 characters is allowed
+                </span>
+                </mat-error>
+                <mat-icon matSuffix (click)="hide = !hide">{{hide? 'visibility': 'visibility_off'}}</mat-icon>
+              </mat-form-field>
+            </div>
+
+            <!--<div class="form-group">
+              <mat-form-field appearance="fill" style="width: 100%">
+                <mat-label><i class="fa fa-check-square-o"></i>&nbsp;Confirm Password</mat-label>
+                <input matInput type="password" formControlName="confirmPassword"/>
+                <mat-error
+                  *ngIf="registerForm.get('confirmPassword').invalid && registerForm.get('confirmPassword').touched"
+                  class="alert alert-danger">
+                <span *ngIf="registerForm.controls['confirmPassword'].hasError('required')">
+                  Confirm Password is Required
+                </span>
+                  <span *ngIf="registerForm.controls['confirmPassword'].hasError('minlength')">
+                  Minimum of 6 characters is allowed
+                </span>
+                  <span *ngIf="registerForm.controls['confirmPassword'].hasError('compare')">
+                  Password and Confirm password must be the same
+                </span>
+
+                </mat-error>
+              </mat-form-field>
+
+            </div>-->
+          </form>
+        </div>
+
+      </div>
+      <div class="modal-footer" align="center" style="text-align: center; display: inline-block">
+        <button type="submit" class="btn text-white" name="submit" [disabled]="registerForm.invalid"
+                (click)="registerSubmit(registerModal, loginModal) ">
+          <span *ngIf="registerLoader" matPrefix>
+          <div class="spinner-grow text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </span>
+          Register&nbsp;<i
+          class="fa fa-paper-plane" ></i></button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--Registration Modal End-->
+
+
+<!--Forgot password Modal-->
+
+<div mdbModal #forgotModal="mdbModal" class="modal animated slideInLeft faster" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <h4 class="modal-title w-100 font-weight-bold" id="myModalLabel" style="color: #184e8e">Forgot Password</h4>
+        </div>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="forgotModal.hide()">
+          <span aria-hidden="true" style="color: red;">×</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="card card-body">
+          <form [formGroup]="forgotPasswordForm" >
+            <div class="form-group">
+              <mat-form-field appearance="fill" style="width: 100%">
+                <mat-label><i class="fa fa-envelope-o"></i>&nbsp;Email</mat-label>
+                <input matInput type="text" name="email" formControlName="email"/>
+                <mat-error *ngIf="forgotPasswordForm.get('email').invalid && forgotPasswordForm.get('email').touched"
+                           class="alert alert-danger">
+                  <span *ngIf="forgotPasswordForm.controls['email'].hasError('required')">Email is Required</span>
+                  <span *ngIf="forgotPasswordForm.controls['email'].hasError('email')">Invalid Email</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" name="submit" type="submit" [disabled]="forgotPasswordForm.invalid" (click) = "forgotSubmit()">
+          <span matPrefix *ngIf="fogotLoader">
+            <div class="spinner-grow text-primary" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </span>
+          Send Email &nbsp;<i
+          class="fa fa-paper-plane"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Forgot password Modal end-->
+
+
