@@ -22,6 +22,11 @@ import {
   SpeechRecognitionModule,
   SpeechRecognitionService
 } from '@kamiazya/ngx-speech-recognition';
+import {LoginComponent} from './login/login.component';
+import {HttpClientModule} from '@angular/common/http';
+import {AuthenticationService} from './shared/services/authentication.service';
+import { RegisterComponent } from './register/register.component';
+import {ToastrModule, ToastrService} from 'ngx-toastr';
 
 // configs
 export function getAuthServiceConfigs() {
@@ -43,19 +48,13 @@ export function getAuthServiceConfigs() {
   );
   return config;
 }
-import { AuthenticationComponent } from './authentication/authentication.component';
-import { LoginComponent } from './authentication/login/login.component';
-import { RegistrationComponent } from './authentication/registration/registration.component';
-import { ApplicationComponent } from './application/application.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SigninComponent,
-    AuthenticationComponent,
     LoginComponent,
-    RegistrationComponent,
-    ApplicationComponent
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,7 +64,9 @@ import { ApplicationComponent } from './application/application.component';
     WebSpeechModule,
     SharedModule,
     FormsModule,
+    ToastrModule.forRoot(), // ToastrModule added
     ReactiveFormsModule,
+    HttpClientModule,
     SpeechRecognitionModule.withConfig({
       lang: 'en-US',
       interimResults: true,
@@ -87,6 +88,7 @@ import { ApplicationComponent } from './application/application.component';
     },
     SpeechRecognitionService,
     RxSpeechRecognitionService,
+    AuthenticationService,
   ],
   bootstrap: [AppComponent]
 })

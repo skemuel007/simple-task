@@ -1,23 +1,32 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {SigninComponent} from './signin/signin.component';
 import {WebSpeechComponent} from './web-speech/web-speech.component';
+import {LoginComponent} from './login/login.component';
+import {AuthGuard} from './shared/guards/auth.guard';
+import {RegisterComponent} from './register/register.component';
 
 
 const routes: Routes = [
   {
-    path: 'signin',
-    component: SigninComponent
+    path: 'login',
+    component: LoginComponent
   },
   {
-    path: '',
-    redirectTo: 'web-speech',
-    pathMatch: 'full'
+    path: 'register',
+    component: RegisterComponent
   },
   {
     path: 'web-speech',
-    component: WebSpeechComponent
-  }
+    component: WebSpeechComponent,
+    canActivate: [
+      AuthGuard
+    ]
+  },
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
+  },
 ];
 
 @NgModule({
