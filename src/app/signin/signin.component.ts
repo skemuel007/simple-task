@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService, FacebookLoginProvider, GoogleLoginProvider, LinkedinLoginProvider} from 'angular-6-social-login';
 import {resultList, RxSpeechRecognitionService} from '@kamiazya/ngx-speech-recognition';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-signin',
@@ -11,6 +12,7 @@ export class SigninComponent implements OnInit {
 
   message = '';
   constructor(private socialAuthService: AuthService,
+              private toastr: ToastrService,
               public service: RxSpeechRecognitionService) { }
 
   ngOnInit() {

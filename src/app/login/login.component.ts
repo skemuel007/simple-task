@@ -113,8 +113,30 @@ export class LoginComponent implements OnInit {
 
     this.socialAuthService.signIn(socialPlatformProvider)
       .then((userData) => {
-        console.log(userData);
-      });
+        if ( userData !== null) {
+          const response = {
+            message: 'Success',
+            data: {
+              token: userData.token,
+              user: {
+                id: userData.id,
+                email: userData.email,
+                image: userData.image,
+                name: userData.name,
+                provider: userData.provider
+              }
+            }
+          };
+
+          localStorage.setItem('currentUser', JSON.stringify(response.data));
+          // set toastr
+          this.toastr.success('Login successful');
+          // navigate to a new page
+          this.route.navigate(['./web-speech']);
+        }
+      }).catch((error) => {
+        this.toastr.error('Social login error, please try again');
+    });
   }
 
 }
